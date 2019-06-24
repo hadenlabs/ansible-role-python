@@ -32,3 +32,13 @@
     - python_pyenv_file_requeriments is defined
   tags:
     - deploy
+
+- name: Apply migrations
+  become_user: "{{ python_pyenv_owner }}"
+  shell: ". {{ _python_path_file_pyenvrunrc }} && python manage.py migrate"
+  when:
+    - python_pyenv_virtualenvs is defined
+    - python_pyenv_install
+  tags:
+    - migrations
+
